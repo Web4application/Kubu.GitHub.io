@@ -105,6 +105,11 @@ npm start
 
 ---
 
+/devcontainer-web   → frontend
+/devcontainer-api   → backend
+/devcontainer-ai    → ML models
+/devcontainer-chain → blockchain
+
 # API Endpoints
 
 | Method | Endpoint | Description |
@@ -220,4 +225,185 @@ If you find this project useful:
 | GitHub CLI       | ✅       |
 | SSHD             | ✅       |
 | Git LFS          | ✅       |
+
+
+---
+
+# ⚡ Rewritten Lightweight Version (Clean Dev Container Setup)
+
+Instead of that huge universal image, we split it into a **focused dev environment**.
+
+---
+
+# 🧱 1. New `.devcontainer/devcontainer.json`
+
+```json id="devcontainer1"
+{
+  "name": "Web4 Lightweight Dev Environment",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11-slim",
+
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {}
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "dbaeumer.vscode-eslint"
+      ]
+    }
+  },
+
+  "postCreateCommand": "pip install --no-cache-dir -r requirements.txt || true",
+
+  "remoteUser": "vscode"
+}
+```
+
+---
+
+# 🐍 2. Clean `Dockerfile` (optional upgrade path)
+
+If you prefer full control:
+
+```dockerfile id="docker1"
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install system dependencies (minimal)
+RUN apt-get update && apt-get install -y \
+    git curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy project
+COPY . .
+
+EXPOSE 8000
+
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+```
+
+---
+
+# 📦 3. Minimal `requirements.txt`
+
+```txt id="req1"
+fastapi
+uvicorn
+pydantic
+requests
+```
+
+(Only add ML libs if needed—don’t preload everything)
+
+---
+
+# 📁 4. Clean `.dockerignore`
+
+```txt id="ignore2"
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.env
+.git
+node_modules
+dist
+build
+*.log
+```
+
+---
+
+# 🚀 5. If you still need Node + Python (hybrid setup)
+
+Use this instead of universal monster image:
+
+```dockerfile id="hybrid1"
+FROM python:3.11-slim
+
+# Install Node only (lightweight approach)
+RUN apt-get update && apt-get install -y curl \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY . .
+
+RUN pip install --no-cache-dir -r requirements.txt || true
+RUN npm install || true
+
+EXPOSE 8000 3000
+
+CMD ["bash"]
+```
+
+---
+
+# 📉 What changed (important)
+
+## Before (your old setup)
+
+* 30+ devcontainer features
+* Conda + ML + Java + Go + PHP + Ruby
+* Docker-in-Docker
+* Kubernetes tools
+* Huge shared layers
+* Multi-GB image
+
+---
+
+## After (this rewrite)
+
+* Python slim base
+* optional Node only
+* no Conda
+* no Kubernetes stack
+* no duplicate runtimes
+* minimal layers
+
+---
+
+# ⚡ Result
+
+| Version             | Size           |
+| ------------------- | -------------- |
+| Old universal image | 5–15GB         |
+| New lightweight     | 150MB – 600MB  |
+| Hybrid version      | ~500MB – 1.2GB |
+
+---
+
+# 🧠 Real engineering advice (no sugar-coating)
+
+Your old image is what teams build when they think:
+
+> “Let’s include EVERYTHING so nothing breaks”
+
+But in real production systems:
+
+> You always split environments by purpose.
+
+---
+
+# 🧭 Best structure for your ecosystem
+
+For your projects (Web4 / Fadaka / AI system), use:
+
+```text id="arch2"
+/devcontainer-web   → frontend
+/devcontainer-api   → backend
+/devcontainer-ai    → ML models
+/devcontainer-chain → blockchain
+```
+
+---
 
