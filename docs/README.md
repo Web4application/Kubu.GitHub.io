@@ -1,5 +1,5 @@
 # 📷 Intel RealSense D435i
-
+ 
 Real-time RGB-D camera streaming on Unitree G1 (Jetson Orin NX)
 
 <table>
@@ -193,8 +193,8 @@ Exit: `q` key or `Ctrl+C`
 ```python
 # 02_stream_sender.py
 MAC_IP = "192.168.123.99"  # Mac IP (wired recommended!)
-RGB_PORT = 8889           # RGB stream port
-DEPTH_PORT = 8890         # Depth stream port
+RGB_PORT = 8000           # RGB stream port
+DEPTH_PORT = 8890 8090         # Depth stream port
 CHUNK_SIZE = 60000        # 60KB chunks (UDP safe size)
 
 # Stream settings
