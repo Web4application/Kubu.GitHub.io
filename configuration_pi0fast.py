@@ -1,13 +1,10 @@
 from dataclasses import dataclass, field
-
 from lerobot.configs.policies import PreTrainedConfig
 from lerobot.configs.types import FeatureType, NormalizationMode, PolicyFeature
 from lerobot.optim.optimizers import AdamWConfig
 from lerobot.optim.schedulers import (
     CosineDecayWithWarmupSchedulerConfig,
 )
-
-
 @PreTrainedConfig.register_subclass("pi0fast")
 @dataclass
 class PI0FASTConfig(PreTrainedConfig):
