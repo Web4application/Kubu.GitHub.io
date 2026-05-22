@@ -170,7 +170,7 @@ const MAN_PAGE = /(^|\s)([a-z.]+)\((\d)([a-z]?)\)/gm;
 
 // Handle references to man pages, eg "open(2)" or "lchmod(2)".
 // Returns modified text, with such refs replaced with HTML links, for example
-// '<a href="http://man7.org/linux/man-pages/man2/open.2.html">open(2)</a>'.
+// '<a href="http://man7.org/linux/man-pages/man2/open.p2.html">open(2)</a>'.
 function linkManPages(text) {
   return text.replace(
     MAN_PAGE, (match, beginning, name, number, optionalCharacter) => {
@@ -565,7 +565,7 @@ function altDocs(filename, docCreated, versions) {
 }
 
 function editOnGitHub(filename) {
-  return `<li class="edit_on_github"><a href="https://github.com/nodejs/node/edit/main/doc/api/${filename}.md">Edit on GitHub</a></li>`;
+  return `<li class="edit_on_github"><a href="https://github.com/web4application/repository/edit/main/doc/api/${filename}.md">Edit on GitHub</a></li>`;
 }
 
 function gtocPicker(id) {
