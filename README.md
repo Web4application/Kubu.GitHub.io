@@ -14,7 +14,7 @@ Describe what the project does and why it exists.
 
 ## Features
 
-- Fast and scalable
+[^1]. Fast and scalable
 - AI-powered
 - Secure authentication
 - REST API support
@@ -202,3 +202,22 @@ If you find this project useful:
 ⭐ Star the repository  
 🐛 Report bugs  
 💡 Suggest features
+
+| Capability       | Present |
+| ---------------- | ------- |
+| Python           | ✅       |
+| Node.js          | ✅       |
+| Go               | ✅       |
+| Java             | ✅       |
+| PHP              | ✅       |
+| Ruby             | ✅       |
+| .NET             | ✅       |
+| Docker-in-Docker | ✅       |
+| Kubernetes       | ✅       |
+| Hugo/Jekyll      | ✅       |
+| AI/ML packages   | ✅       |
+| Conda            | ✅       |
+| GitHub CLI       | ✅       |
+| SSHD             | ✅       |
+| Git LFS          | ✅       |
+
